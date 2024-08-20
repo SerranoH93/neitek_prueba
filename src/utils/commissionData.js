@@ -15,14 +15,5 @@ export const commissionData = {
         { level: 4, range: '350,000 - 450,000', rate: '2.00%' },
         { level: 5, range: '450,000 - 750,000', rate: '2.50%' },
         { level: 6, range: '750,000 - 1,000,000', rate: '4.00%' },
-    ],
-    monthlySales: {
-        month: 'April',
-        sales: 11500,
-        threeMonthAverage: 10000,
-    },
-    seller: {
-        name: 'Antonio Sepulveda',
-        date: '18/08/2022',
-    }
+    ]
 };

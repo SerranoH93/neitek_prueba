@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { commissionData } from '../utils/commissionData';
 
 const FullCommissionTable = () => {
-    const { salesLevels, salesCommissionRates, equipmentSalesLevels, monthlySales, seller } = commissionData;
+    const { salesLevels, salesCommissionRates, equipmentSalesLevels } = commissionData;
 
     const [reportData, setReportData] = useState(null);
 
