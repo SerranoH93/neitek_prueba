@@ -45,16 +45,14 @@ const SalesReport = () => {
         const baseCommissionSales = baseCommission(region, equipmentSales, serviceSales);
 
         //* Calcula el bono por ventas de equipo
-        const { equipmentBonus, level } = calculateBonusEquipmentSales(equipmentSales);
-        // console.log(equipmentBonus, level);
+        const { equipmentBonus, levelEquipment } = calculateBonusEquipmentSales(equipmentSales);
+        // console.log(equipmentBonus, levelEquipment);
         
+        const totalSalesMonth = serviceSales + equipmentSales
 
         //* Calcula el bono por ventas de servicios
         const salesMonths = salesHistory.slice(-3).map(sale => sale.serviceSales);
-        const servicesBonus = calculateBonusServicesSales(serviceSales, ...salesMonths);   
-        console.log("Service Sales:", serviceSales);
-        console.log("Sales Months:", salesMonths);
-        console.log("Services Bonus:", servicesBonus);   
+        const { servicesBonus, levelServices } = calculateBonusServicesSales(serviceSales, ...salesMonths);   
 
         //* Suma los bonos
         const totalBonuses = baseCommissionSales + servicesBonus + equipmentBonus;        
@@ -72,14 +70,14 @@ const SalesReport = () => {
         setAverageSales(avgSales);
         setTotalBonuses(totalBonuses);
 
-        // Actualiza el historial de ventas
+        //* Actualiza el historial de ventas
         const existingData = salesHistory.find(sale => sale.month === formData.selectedMonth);
         if (existingData) {
             existingData.serviceSales = serviceSales;
             existingData.equipmentSales = equipmentSales;
             existingData.region = region;
             existingData.bonuses = totalBonuses;
-            existingData.level = level;
+            existingData.levelEquipment = levelEquipment;
         } else {
             setSalesHistory([...salesHistory, {
                 name: formData.name,
@@ -88,12 +86,14 @@ const SalesReport = () => {
                 equipmentSales,
                 region,
                 totalSales,
+                totalSalesMonth,
                 avgSales,
                 baseCommissionSales,
                 servicesBonus,
                 equipmentBonus,
                 totalBonuses,
-                level
+                levelEquipment,
+                levelServices
             }]);
         }        
     };
@@ -108,7 +108,7 @@ const SalesReport = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">Calculo de comisiones</h1>
+            <h1 className="text-2xl font-bold mb-4">Cálculo de comisiones</h1>
 
             <div className="mb-6">
 

@@ -23,17 +23,27 @@ export function calculateBonusServicesSales(actualSales, salesMonth1, salesMonth
     const averageSales = (salesMonth1 + salesMonth2 + salesMonth3) / 3;
     const salesPercentage = (actualSales / averageSales * 100);
     
-    let servicesSalesBonus = 0;
+    const levels = [
+        { min: 101, max: 109, bonus: 200 },
+        { min: 110, max: 119, bonus: 250 },
+        { min: 120, bonus: 275 }
+    ];
 
-    if (salesPercentage >= 101 && salesPercentage <= 109) {
-        servicesSalesBonus = 200;        
-    } else if (salesPercentage >= 110 && salesPercentage <= 119) { 
-        servicesSalesBonus = 250;
-    } else if (salesPercentage >= 120) {
-        servicesSalesBonus = 275;
+    let servicesSalesBonus = 0;
+    let currentLevel = 0;
+
+    for (const level of levels) {
+        if (salesPercentage >= level.min && (level.max ? salesPercentage <= level.max : true)) {
+            servicesSalesBonus = level.bonus;
+            currentLevel = levels.indexOf(level) + 1;
+            break;
+        }
     }
 
-    return servicesSalesBonus;    
+    return { 
+        servicesBonus: servicesSalesBonus, 
+        levelServices: currentLevel
+    };
 }
 
 export function calculateBonusEquipmentSales(equipmentSales) {
@@ -63,6 +73,6 @@ export function calculateBonusEquipmentSales(equipmentSales) {
 
     return { 
         equipmentBonus: bonus, 
-        level: currentLevel
+        levelEquipment: currentLevel
     };
 }

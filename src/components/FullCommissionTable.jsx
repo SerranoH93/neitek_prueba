@@ -24,22 +24,34 @@ const FullCommissionTable = () => {
     let year = date.getFullYear();
     let formattedDate = `${day}/${month}/${year}`;
 
-    const { name, serviceSales, equipmentSales, totalSales, avgSales, baseCommissionSales, equipmentBonus, servicesBonus, totalBonuses, level} = reportData;
+    const { 
+        name, 
+        serviceSales, 
+        equipmentSales, 
+        totalSales, 
+        totalSalesMonth, 
+        avgSales, 
+        baseCommissionSales, 
+        equipmentBonus, 
+        servicesBonus, 
+        totalBonuses, 
+        levelEquipment
+    } = reportData;
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6">Reporte de comisiones - {name}</h1>
+            <h1 className="text-3xl font-bold mb-6">Reporte de comisiones</h1>
 
             
             <div className="mb-6">
                 <p><strong>Fecha:</strong> {formattedDate}</p>
                 <p><strong>Mes:</strong> {reportData.month}</p>
-                <p><strong>Ventas en {reportData.month}:</strong> ${totalSales}</p>
+                <p><strong>Ventas en {reportData.month}:</strong> ${totalSalesMonth}</p>
                 <p><strong>Promedio de ventas (Ultimos 3 meses):</strong> ${avgSales}</p>
             </div>
 
             <div>
-                <p>Vendedor: {name}</p>
+                <p>Vendedor: <strong>{name}</strong></p>
                 <p>Desglose de montos a pagar</p>
             </div>
 
@@ -67,7 +79,7 @@ const FullCommissionTable = () => {
             <p>Venta de Equipos:{equipmentSales}</p>
             <p>Comisión: <strong>{baseCommissionSales}</strong></p>
 
-            <h3>Bono mensual por Equipos</h3>
+            <h3>Bono mensual por Servicios</h3>
 
             <p>Tabulador:</p>            
             <table className="min-w-full bg-white mb-6">
@@ -91,11 +103,11 @@ const FullCommissionTable = () => {
 
             <p>Ventas promedio (ultimos 3 meses): ${avgSales} </p>
             <p>Venta del mes: ${totalSales} </p>
-            <p>Su nivel es: {level}</p>
-            <p>Comision: <strong>{equipmentBonus}</strong></p>
+            <p>Su nivel es: {levelEquipment}</p>
+            <p>Comision: <strong>{servicesBonus}</strong></p>
 
 
-            <h3>Comisión Bono mensual por Servicios</h3>
+            <h3>Comisión Bono mensual por Equipos</h3>
 
             <p>Tabulador:</p>
             <table className="min-w-full bg-white">
@@ -118,8 +130,8 @@ const FullCommissionTable = () => {
             </table>
 
             <p>El total de las ventas del mes: {totalSales}</p>
-            <p>Nivel de ventas:</p>
-            <p>Comision: <strong></strong></p>
+            <p>Nivel de ventas: {levelEquipment}</p>
+            <p>Comision: <strong>{equipmentBonus}</strong></p>
 
 
             <p>TOTAL DE COMSIÓN: {totalBonuses} <strong></strong></p>
