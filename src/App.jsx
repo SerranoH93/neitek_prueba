@@ -1,9 +1,18 @@
-import SalesReport from "./components/SalesReport";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FullCommissionTable from './components/FullCommissionTable';
+import Home from './views/Home';
+import Report from './views/Report';
 
-export default function App() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      <SalesReport/>
-    </h1>
-  )
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/report/:month" element={<Report />} />
+            </Routes>
+        </Router>
+    );
 }
+
+export default App;

@@ -36,24 +36,33 @@ export function calculateBonusServicesSales(actualSales, salesMonth1, salesMonth
     return servicesSalesBonus;    
 }
 
-export function calculateBonusEquipmentSales (equipmentSales) {
-    let comisionRate = 0;
+export function calculateBonusEquipmentSales(equipmentSales) {
+    const levels = [
+        { max: 250000, rate: 0.0025 },
+        { max: 300000, rate: 0.005 },
+        { max: 350000, rate: 0.015 },
+        { max: 450000, rate: 0.02 },
+        { max: 750000, rate: 0.025 },
+        { max: 1000000, rate: 0.04 },
+    ];
 
-    if (equipmentSales > 0 && equipmentSales <= 250000) {
-        comisionRate = 0.0025;
-    } else if (equipmentSales > 250000 && equipmentSales <= 300000) {
-        comisionRate = 0.005;
-    } else if (equipmentSales > 300000 && equipmentSales <= 350000) {
-        comisionRate = 0.015;
-    } else if (equipmentSales > 350000 && equipmentSales <= 450000) {
-        comisionRate = 0.02;
-    } else if (equipmentSales > 450000 && equipmentSales <= 750000) {
-        comisionRate = 0.025;
-    } else if (equipmentSales > 750000 && equipmentSales <= 1000000) {
-        comisionRate = 0.04;
+    let remainingSales = equipmentSales;
+    let bonus = 0;
+    let currentLevel = 0;
+
+    for (const level of levels) {
+        if (remainingSales > 0) {
+            const salesInLevel = Math.min(remainingSales, level.max - (bonus > 0 ? levels[levels.indexOf(level) - 1]?.max || 0 : 0));
+            bonus += salesInLevel * level.rate;
+            remainingSales -= salesInLevel;
+            currentLevel = levels.indexOf(level) + 1;
+        } else {
+            break;
+        }
     }
 
-    const equipmentSalesBonus = equipmentSales * comisionRate;
-
-    return equipmentSalesBonus;
+    return { 
+        equipmentBonus: bonus, 
+        level: currentLevel
+    };
 }
